@@ -5,7 +5,6 @@ The Skeleton has:
   - LEDs for eyes
   - A Motor to make it shake like crazy
   - An ultrasonic sensor to detect when someone (or something) is nearby
-  - An MP3 Player Shield to make sounds, and
 
 Earlier versions of this sketch were written for a self-contained
 unit (motion sensor, motor/LED control, and MP3 player). This version
@@ -14,6 +13,8 @@ intended to be used with a device running Linux (e.g. a Raspberry Pi)
 that interacts with this sketch over a serial connection with a few
 well-defined commands to read sensor input and control eye and motor
 state.
+
+velo27 [at] yahoo [dot] com
   
 */
 

@@ -90,6 +90,17 @@ void set_eyes_pulse() {
 }
 
 
+void print_distance() {
+  int distance = get_distance();
+  if (distance < 10) {
+    Serial.print("00");
+  } else if (distance < 100) {
+    Serial.print("0");
+  }
+  Serial.print(distance);
+}
+
+
 char *dispatch(int cmd) {
   //Serial.print("I received: ");
   //Serial.println(cmd, DEC);
@@ -100,7 +111,7 @@ char *dispatch(int cmd) {
     set_shake_off();
     set_eyes_pulse();
   } else if (cmd == CMD_DISTANCE) {
-    Serial.print(get_distance());
+    print_distance();
   }
 }
 

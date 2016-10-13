@@ -2,7 +2,8 @@
 
 import argparse
 import collections
-#import serial
+import pygame
+import serial
 import sys
 import time
 
@@ -57,14 +58,17 @@ class Skeleton(_SkeletonBase):
         self._port = serial.Serial(tty, baud)
 
     def read_distance(self):
-        self._port.write(CMD_READ_DISTANCE)
-        return int(port.read())
+        self._port.write(self.CMD_READ_DISTANCE)
+        time.sleep(0.1)
+        return int(self._port.read(3))
 
     def shake(self):
         print "shaking"
+        self._port.write(self.CMD_SHAKE)
 
     def throb(self):
         print "throbbing"
+        self._port.write(self.CMD_THROB)
 
 
 
@@ -77,12 +81,13 @@ SCREAM = "scream.wav"
 
 def play_sound(filename):
     print "Playing %s" % filename
+    pygame.mixer.music.play()
 
 
 def event_loop(tty, baud):
     distances = collections.deque(maxlen=10)
-    #skeleton = Skeleton(tty, baud)
-    skeleton = MockSkeleton()
+    skeleton = Skeleton(tty, baud)
+    #skeleton = MockSkeleton()
     last_shake_time = time.time()
     state = WAIT_ENTER
     while True:
@@ -112,4 +117,7 @@ if __name__ == "__main__":
     if not args.tty:
         parser.print_help()
         sys.exit(1)
+
+    pygame.init()
+    pygame.mixer.music.load("scream.wav")
     event_loop(args.tty, args.baud)

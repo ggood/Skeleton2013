@@ -104,6 +104,7 @@ def event_loop(tty, baud):
                 print "Waiting for victim to leave"
                 skeleton.shake()
                 play_sound(SCREAM)
+                time.sleep(3)
                 skeleton.throb()
         elif state == WAIT_LEAVE:
             if min(set(list(distances))) > LEAVE_DISTANCE_THRESHOLD:

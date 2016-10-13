@@ -85,9 +85,13 @@ def play_sound(filename):
 
 
 def event_loop(tty, baud):
+    # A queue to keep track of the last 10 distance readings
     distances = collections.deque(maxlen=10)
+    # The skeleton controller, which has a few commands to read
+    # distance of objects near it, and commands to change its state.
     skeleton = Skeleton(tty, baud)
     #skeleton = MockSkeleton()
+
     last_shake_time = time.time()
     state = WAIT_ENTER
     while True:
@@ -102,7 +106,7 @@ def event_loop(tty, baud):
                 play_sound(SCREAM)
                 skeleton.throb()
         elif state == WAIT_LEAVE:
-            if max(set(list(distances))) > LEAVE_DISTANCE_THRESHOLD:
+            if min(set(list(distances))) > LEAVE_DISTANCE_THRESHOLD:
                 # May also want a time delay
                 state = WAIT_ENTER
                 print "Waiting for a victim to enter"
